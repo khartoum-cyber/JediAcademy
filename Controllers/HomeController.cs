@@ -1,21 +1,35 @@
 ﻿using JediAcademy.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using JediAcademy.Data;
+using JediAcademy.Models.AcademyViewModels;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace JediAcademy.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly JediAcademyContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(JediAcademyContext context)
         {
-            _logger = logger;
+            _context = context;
+        }
+
+        public async Task<ActionResult> About()
+        {
+            IQueryable<EnrollmentDateGroup> data =
+                from student in _context.Students
+                group student by student.EnrollmentDate into dateGroup
+                select new EnrollmentDateGroup()
+                {
+                    EnrollmentDate = dateGroup.Key,
+                    StudentCount = dateGroup.Count()
+                };
+            return View(await data.AsNoTracking().ToListAsync());
         }
 
         public IActionResult Index()
