@@ -4,14 +4,16 @@ using JediAcademy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JediAcademy.Migrations
 {
     [DbContext(typeof(JediAcademyContext))]
-    partial class JediAcademyContextModelSnapshot : ModelSnapshot
+    [Migration("20210130202908_ColumnFirstName")]
+    partial class ColumnFirstName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
