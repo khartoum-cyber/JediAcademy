@@ -113,6 +113,32 @@ namespace JediAcademy.Migrations
                     b.ToTable("Enrollment");
                 });
 
+            modelBuilder.Entity("JediAcademy.Models.Instructor", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("FirstMidName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("FirstName");
+
+                    b.Property<DateTime>("HireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Instructor");
+                });
+
             modelBuilder.Entity("JediAcademy.Models.OfficeAssignment", b =>
                 {
                     b.Property<int>("InstructorID")
@@ -127,12 +153,15 @@ namespace JediAcademy.Migrations
                     b.ToTable("OfficeAssignment");
                 });
 
-            modelBuilder.Entity("JediAcademy.Models.Person", b =>
+            modelBuilder.Entity("JediAcademy.Models.Student", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<DateTime>("EnrollmentDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstMidName")
                         .IsRequired()
@@ -146,26 +175,6 @@ namespace JediAcademy.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("ID");
-
-                    b.ToTable("Person");
-                });
-
-            modelBuilder.Entity("JediAcademy.Models.Instructor", b =>
-                {
-                    b.HasBaseType("JediAcademy.Models.Person");
-
-                    b.Property<DateTime>("HireDate")
-                        .HasColumnType("datetime2");
-
-                    b.ToTable("Instructor");
-                });
-
-            modelBuilder.Entity("JediAcademy.Models.Student", b =>
-                {
-                    b.HasBaseType("JediAcademy.Models.Person");
-
-                    b.Property<DateTime>("EnrollmentDate")
-                        .HasColumnType("datetime2");
 
                     b.ToTable("Student");
                 });
@@ -237,24 +246,6 @@ namespace JediAcademy.Migrations
                         .IsRequired();
 
                     b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("JediAcademy.Models.Instructor", b =>
-                {
-                    b.HasOne("JediAcademy.Models.Person", null)
-                        .WithOne()
-                        .HasForeignKey("JediAcademy.Models.Instructor", "ID")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("JediAcademy.Models.Student", b =>
-                {
-                    b.HasOne("JediAcademy.Models.Person", null)
-                        .WithOne()
-                        .HasForeignKey("JediAcademy.Models.Student", "ID")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("JediAcademy.Models.Course", b =>
